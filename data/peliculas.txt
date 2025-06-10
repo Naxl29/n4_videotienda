@@ -10,13 +10,13 @@ pelicula1.copias = 3
 pelicula2.nombre = Cuestión de Tiempo
 pelicula2.copias = 2
 
-pelicula3.nombre = Buscando a Nemo
+pelicula3.nombre = Harry Potter y las reliquias de la muerte - Parte 1 
 pelicula3.copias = 2
 
-pelicula4.nombre = Matrix
+pelicula4.nombre = Estación Zombie
 pelicula4.copias = 3
 
-pelicula5.nombre=Troya
+pelicula5.nombre= 300
 pelicula5.copias = 1
 
 pelicula6.nombre = Cruzada
