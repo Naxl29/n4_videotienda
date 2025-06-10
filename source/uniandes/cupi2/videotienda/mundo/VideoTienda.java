@@ -161,8 +161,25 @@ public class VideoTienda
      */
     public void cargarSaldoCliente( String cedula, int monto ) throws Exception
     {
-    	//TODO implementar
+    	if( cedula == null)
+    	{
+    		throw new Exception( "La cédula no puede ser null" );
+    	}
+    	if( monto <= 0)
+    	{
+    		throw new Exception( "El monto no puede ser menor a 0" );
+    	}
+    	
+    	Cliente cliente = buscarCliente( cedula );
+    	
+    	if( cliente == null )
+    	{
+    		throw new Exception( "El cliente no existe, cédula ingresada: " + cedula );
+    	}
+    	
+    	cliente.cargarSaldo( monto );
     }
+    
 
     /**
      * Alquila una pel�cula a un cliente. <br>
