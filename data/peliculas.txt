@@ -19,17 +19,17 @@ pelicula4.copias = 3
 pelicula5.nombre= 300
 pelicula5.copias = 1
 
-pelicula6.nombre = Cruzada
+pelicula6.nombre = El planeta del tesoro
 pelicula6.copias = 2
 
-pelicula7.nombre = E.T
-pelicula7.copias = 5
+pelicula7.nombre = Tanya the Evil - the Movie
+pelicula7.copias = 2
 
-pelicula8.nombre= El Gran Pez
-pelicula8.copias = 1
+pelicula8.nombre= Ace Ventura
+pelicula8.copias = 2
 
-pelicula9.nombre=StarWars
+pelicula9.nombre= La caída del halcón negro
 pelicula9.copias = 6
 
-pelicula10.nombre=El padrino
-pelicula10.copias = 4
+pelicula10.nombre= Piratas del caribe
+pelicula10.copias = 10
