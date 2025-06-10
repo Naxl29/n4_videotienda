@@ -33,12 +33,12 @@ public class Pelicula
     /**
      * Lista de copias disponibles
      */
-    private ArrayList disponibles;
+    private ArrayList<Copia> disponibles;
 
     /**
      * Lista de copias prestadas
      */
-    private ArrayList prestadas;
+    private ArrayList<Copia> prestadas;
 
     /**
      * N�mero de la siguiente copia a adicionar
@@ -56,7 +56,10 @@ public class Pelicula
      */
     public Pelicula( String unTitulo )
     {
-    	//TODO implementar inicializando los atributos
+        titulo = unTitulo;
+        disponibles = new ArrayList<>();
+        prestadas = new ArrayList<>();
+        codigoSiguienteCopia = 1;
     }
 
     //-----------------------------------------------------------------
@@ -70,7 +73,10 @@ public class Pelicula
      */
     public int agregarCopia( )
     {
-    	//TODO implementar. Recuerde retornar lo indicado en la documentaci�n. 
+        Copia nuevaCopia = new Copia(titulo, codigoSiguienteCopia);
+        disponibles.add(nuevaCopia);
+        codigoSiguienteCopia++;
+        return codigoSiguienteCopia - 1;
     }
 
     /**
@@ -80,7 +86,12 @@ public class Pelicula
      */
     public Copia alquilarCopia( )
     {
-    	//TODO implementar. Recuerde retornar lo indicado en la documentaci�n.
+        if(disponibles.isEmpty()) {
+            return null;
+        }
+        Copia copia = (Copia)disponibles.remove(0);
+        prestadas.add(copia);
+        return copia;
     }
 
     /**
@@ -90,7 +101,24 @@ public class Pelicula
      * @throws Exception Si la copia a devolver no est� prestada.
      */
     public void devolverCopia( int codigoCopia ) throws Exception
-     //TODO Definir la signatura del m�todo de acuerdo a la documentaci�n e implementarlo.
+    {
+        Copia copiaADevolver = null;
+        
+        for(int i = 0; i < prestadas.size(); i++) {
+            Copia copia = (Copia)prestadas.get(i);
+            if(copia.darCodigo() == codigoCopia) {
+                copiaADevolver = copia;
+                prestadas.remove(i);
+                break;
+            }
+        }
+        
+        if(copiaADevolver == null) {
+            throw new Exception("La copia no está prestada");
+        }
+        
+        disponibles.add(copiaADevolver);
+    }
 
     /**
      * Retorna el t�tulo de la pel�cula.
@@ -107,14 +135,15 @@ public class Pelicula
      */
     public int darTotalCopias( )
     {
-        //TODO Definir la signatura del m�todo de acuerdo a la documentaci�n e implementarlo.
+        return disponibles.size() + prestadas.size();
     }
-    //TODO Definir la signatura del m�todo de acuerdo a la documentaci�n e implementarlo.
 
     /**
      * Retorna el n�mero de copias disponibles
      * @return n�mero de copias disponibles
      */
     public int darNumeroDisponibles( )
-    //TODO Definir la signatura del m�todo de acuerdo a la documentaci�n e implementarlo.
+    {
+        return disponibles.size();
+    }
 }
