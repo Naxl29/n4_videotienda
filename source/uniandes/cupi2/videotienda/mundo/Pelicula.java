@@ -69,7 +69,7 @@ public class Pelicula
     /**
      * Adiciona una nueva copia de la película. <br>
      * <b>post: </b>La lista de películas disponibles tiene una nueva copia.
-     * @return c�digo de la copia creada. c�digo >= 1;
+     * @return código de la copia creada. código >= 1;
      */
     public int agregarCopia( )
     {
@@ -80,7 +80,7 @@ public class Pelicula
     }
 
     /**
-     * Retorna una copia de pel�cula para alquilar si hay disponibles. <br>
+     * Retorna una copia de película para alquilar si hay disponibles. <br>
      * <b>post: </b> la copia queda en la lista de prestadas.
      * @return Copia que ha sido alquilada o null si no hay disponibles.
      */
@@ -98,7 +98,7 @@ public class Pelicula
      * Devuelve una copia de la película y la coloca como disponible. <br>
      * <b>post: </b> regresa la copia a la lista de disponibles, sólo si está prestada.
      * @param codigoCopia Código de la copia que se quiere devolver.
-     * @throws Exception Si la copia a devolver no est� prestada.
+     * @throws Exception Si la copia a devolver no está prestada.
      */
     public void devolverCopia( int codigoCopia ) throws Exception
     {
@@ -121,8 +121,8 @@ public class Pelicula
     }
 
     /**
-     * Retorna el título de la pel�cula.
-     * @return t�tulo de la pel�cula.
+     * Retorna el título de la película.
+     * @return título de la película.
      */
     public String darTitulo( )
     {
@@ -140,7 +140,7 @@ public class Pelicula
 
     /**
      * Retorna el número de copias disponibles
-     * @return n�mero de copias disponibles
+     * @return número de copias disponibles
      */
     public int darNumeroDisponibles( )
     {
