@@ -36,12 +36,12 @@ public class VideoTienda
     /**
      * Clientes
      */
-    //TODO declare el atributo
+
     private List<Cliente> clientes;
     /**
      * Cat�logo de pel�culas
      */
-    //TODO declare el atributo
+    
     private List<Pelicula> peliculas;
     //-----------------------------------------------------------------
     // Constructores
@@ -72,11 +72,11 @@ public class VideoTienda
     public void cargarPeliculas( String archivo ) throws Exception
     {
         String titulo, dato;
-        int peliculas, copias;
+        int cantidadpeliculas, copias;
         Pelicula pel;
 
         //Limpia los datos iniciales de pel�culas
-        catalogo.clear( );
+        peliculas.clear( );
 
         //Obtiene los datos
         try
@@ -86,9 +86,9 @@ public class VideoTienda
             datos.load( input );
 
             //Obtiene el n�mero de pel�culas
-            peliculas = Integer.parseInt( datos.getProperty( "total.peliculas" ) );
+            cantidadpeliculas = Integer.parseInt( datos.getProperty( "total.peliculas" ) );
 
-            for( int i = 1; i <= peliculas; i++ )
+            for( int i = 1; i <= cantidadpeliculas; i++ )
             {
                 dato = "pelicula" + i + ".nombre";
                 //Carga una pel�cula
@@ -105,7 +105,7 @@ public class VideoTienda
                     pel.agregarCopia( );
                 }
 
-                catalogo.add( pel );
+                peliculas.add( pel );
             }
         }
         catch( Exception e )
@@ -124,7 +124,12 @@ public class VideoTienda
      */
     public void afiliarCliente( String cedula, String nombre, String direccion ) throws Exception
     {
-    	//TODO implementar
+        if( buscarCliente( cedula ) != null )
+        {
+            throw new Exception( "Ya existe un cliente con cédula: " + cedula );
+        }
+        Cliente nuevocliente = new Cliente( nombre, cedula, direccion );
+        clientes.add( nuevocliente );
     }
     
     /**
@@ -192,10 +197,34 @@ public class VideoTienda
      * @throws Exception Si no hay copias disponibles.
      * @throws Exception Si el saldo del cliente no es suficiente para el alquiler.
      */
-    public int alquilarPelicula( String titulo, String cedula ) throws Exception
-    {
-    	//TODO implementar
-    	alquilerPelicula = new alquilarPelicula;
+    public int alquilarPelicula( String titulo, String cedula ) throws Exception {
+        // Buscar al cliente por cédula
+        Cliente cliente = buscarCliente( cedula );
+        if ( cliente == null ) 
+        {
+            throw new Exception("No existe un cliente con la cédula: " + cedula );
+        }
+
+        // Buscar la película por título
+        Pelicula pelicula = buscarPeliculaPorTitulo( titulo );
+        if ( pelicula == null ) 
+        {
+            throw new Exception( "La película no existe" );
+        }
+
+        // Intentar alquilar una copia de la película
+        Copia copiaAlquilada = pelicula.alquilarCopia( );
+        if ( copiaAlquilada == null ) 
+        {
+            throw new Exception( "No hay copias disponibles para alquilar" );
+        }
+
+        // Registrar el alquiler en el cliente
+        cliente.alquilarCopia( copiaAlquilada );
+        cliente.descargarSaldo( tarifaDiaria );
+ 
+        // Retornar el código de la copia alquilada
+        return copiaAlquilada.darCodigo( );
     }
 
     /**
@@ -209,29 +238,62 @@ public class VideoTienda
      */
     public void devolverCopia( String titulo, int numeroCopia, String cedula ) throws Exception
     {
-    	//TODO implementar
-    	
-    }
-    
-    
-    public void agregarCopiaPlicula( String titulo )
-    {
-    	
-    }
-    
-    
-    public void modificarTarifa(int nuevaTarifa) 
-    {
-        if (nuevaTarifa > 0) 
+        Cliente cliente = buscarCliente( cedula );
+        if( cliente == null )
         {
-            tarifaDiaria = nuevaTarifa;
-        } 
-        else 
+            throw new Exception( "El cliente con cédula " + cedula + " no existe." );
+        }
+
+        Copia copia = cliente.devolverAlquiler( numeroCopia );
+        if( copia == null )
         {
-            System.out.println("Error: La tarifa debe ser mayor que cero.");
+            throw new Exception( "El cliente no tiene alquilada una copia con número: " + numeroCopia );
+        }
+
+        Pelicula pelicula = buscarPeliculaPorTitulo( titulo );
+        if( pelicula != null )
+        {
+            pelicula.devolverCopia( copia.darCodigo( ) );
         }
     }
+    
+    
+    public void agregarCopiaPelicula( String titulo ) throws Exception 
+    {
+        Pelicula pelicula = buscarPeliculaPorTitulo( titulo );
+        if ( pelicula == null ) 
+        {
+            throw new Exception( "No se encontró una película con el título: " + titulo );
+        }
+        pelicula.agregarCopia( );
+    }
 
+    
+    
+    public void modificarTarifa(int nuevaTarifa) throws Exception {
+        if ( nuevaTarifa <= 0 ) 
+        {
+            throw new Exception( "La tarifa debe ser mayor que cero." );
+        }
+        tarifaDiaria = nuevaTarifa;
+    }
+
+    /**
+     * Busca una pel�cula en el catálogo por su título.
+     * @param titulo Título de la película. titulo != null.
+     * @return Película con el título dado, o null si no existe.
+     */
+    private Pelicula buscarPeliculaPorTitulo( String titulo )
+    {
+        for( Pelicula pelicula : peliculas )
+        {
+            if( pelicula.darTitulo( ).equalsIgnoreCase( titulo ) )
+            {
+                return pelicula;
+            }
+        }
+        return null;
+    }
 
 
 
