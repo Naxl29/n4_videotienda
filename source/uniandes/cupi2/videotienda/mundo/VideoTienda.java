@@ -128,6 +128,7 @@ public class VideoTienda
         {
             throw new Exception( "Ya existe un cliente con cédula: " + cedula );
         }
+        
         Cliente nuevocliente = new Cliente( nombre, cedula, direccion );
         clientes.add( nuevocliente );
     }
@@ -257,7 +258,11 @@ public class VideoTienda
         }
     }
     
-    
+    /**
+     * Agrega una nueva copia a una película existente.
+     * @param titulo Título de la película a la que se le agregará una copia. titulo != null.
+     * @throws Exception Si no se encuentra una película con el título dado.
+     */
     public void agregarCopiaPelicula( String titulo ) throws Exception 
     {
         Pelicula pelicula = buscarPeliculaPorTitulo( titulo );
@@ -269,7 +274,11 @@ public class VideoTienda
     }
 
     
-    
+    /**
+     * Modifica la tarifa diaria de alquiler.
+     * @param nuevaTarifa Nueva tarifa que se desea asignar. nuevaTarifa > 0.
+     * @throws Exception Si la tarifa es menor o igual a cero.
+     */
     public void modificarTarifa(int nuevaTarifa) throws Exception {
         if ( nuevaTarifa <= 0 ) 
         {
@@ -283,7 +292,7 @@ public class VideoTienda
      * @param titulo Título de la película. titulo != null.
      * @return Película con el título dado, o null si no existe.
      */
-    private Pelicula buscarPeliculaPorTitulo( String titulo )
+    public Pelicula buscarPeliculaPorTitulo( String titulo )
     {
         for( Pelicula pelicula : peliculas )
         {
@@ -298,8 +307,8 @@ public class VideoTienda
 
 
     /**
-     * Retorna la lista de clientes de la videotienda
-     * @return ArrayList la lista de clientes
+     * Retorna la lista de clientes de la videotienda.
+     * @return Lista de clientes registrados 
      */
     
     public List<Cliente> darClientes(  )
@@ -307,8 +316,8 @@ public class VideoTienda
     	return clientes;
     }
     /**
-     * Retorna el cat�logo de pel�culas de la videotienda
-     * @return lista de pel�culas existentes. lista != null.
+     * Retorna el cat�logo de peleculas de la videotienda
+     * @return lista de peleculas existentes. lista != null.
      */
     
     public List<Pelicula> darCatalogo(  )
